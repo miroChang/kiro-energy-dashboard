@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智慧能源管理儀表板</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- 異常提醒橫幅：有異常設備時由 app.js 顯示 -->
+  <div id="alert-banner" class="alert-banner hidden" role="alert">
+    <span id="alert-message"></span>
+    <button id="alert-close" class="alert-close" aria-label="關閉提醒">✕</button>
+  </div>
+
+  <!-- 頁首 -->
+  <header class="site-header">
+    <h1 class="site-title">⚡ 智慧能源管理儀表板</h1>
+    <p class="site-subtitle">能源使用狀況即時總覽</p>
+  </header>
+
+  <!-- 主要內容 -->
+  <main class="main-content">
+
+    <!-- 摘要卡片區塊 -->
+    <section class="cards-container" aria-label="用電量摘要">
+
+      <!-- 卡片：今日用電量 -->
+      <div class="card" id="card-today">
+        <h2 class="card-title">今日用電量</h2>
+        <p class="card-value">
+          <span id="today-usage">--</span>
+          <span class="card-unit">kWh</span>
+        </p>
+        <p class="card-note" id="today-note"></p>
+      </div>
+
+      <!-- 卡片：本月累計用電量 -->
+      <div class="card" id="card-month">
+        <h2 class="card-title">本月累計用電量</h2>
+        <p class="card-value">
+          <span id="month-usage">--</span>
+          <span class="card-unit">kWh</span>
+        </p>
+      </div>
+
+      <!-- 卡片：本月預估碳排放量 -->
+      <div class="card" id="card-carbon">
+        <h2 class="card-title">本月預估碳排放</h2>
+        <p class="card-value">
+          <span id="carbon-emission">--</span>
+          <span class="card-unit">kg CO₂</span>
+        </p>
+        <p class="card-note">換算係數：0.502 kg CO₂/kWh</p>
+      </div>
+
+    </section>
+
+    <!-- 能源使用趨勢圖區塊 -->
+    <section class="chart-section" aria-label="能源使用趨勢圖">
+      <h2 class="section-title">能源使用趨勢（過去 7 天）</h2>
+      <div class="chart-wrapper">
+        <svg
+          id="trend-chart"
+          viewBox="0 0 700 240"
+          preserveAspectRatio="xMidYMid meet"
+          aria-label="過去七天每日用電量折線圖"
+          role="img"
+        >
+          <!-- 由 app.js 動態填入 SVG 元素 -->
+          <text x="350" y="120" text-anchor="middle" fill="#aaa" font-size="14">資料載入中…</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 設備狀態區塊 -->
+    <section class="device-section" aria-label="設備狀態列表">
+      <h2 class="section-title">設備狀態</h2>
+      <div class="table-wrapper">
+        <table class="device-table">
+          <thead>
+            <tr>
+              <th scope="col">設備名稱</th>
+              <th scope="col">狀態</th>
+              <th scope="col">最後更新時間</th>
+            </tr>
+          </thead>
+          <tbody id="device-list">
+            <!-- 由 app.js 動態填入列資料 -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 頁尾 -->
+  <footer class="site-footer">
+    <p>© 2026 智慧能源管理系統｜資料為模擬資料，僅供原型展示使用</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

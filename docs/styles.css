@@ -1,0 +1,410 @@
+/* ==============================================
+   智慧能源管理儀表板 — 全域樣式
+   ============================================== */
+
+/* --- Reset 與基礎設定 --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft JhengHei',
+               'PingFang TC', sans-serif;
+  background-color: #f4f6f9;
+  color: #2c3e50;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==============================================
+   異常提醒橫幅
+   ============================================== */
+.alert-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background-color: #c0392b;  /* 更深的紅，提高對比 */
+  color: #fff;
+  padding: 14px 24px;         /* 12px → 14px，稍微加高 */
+  font-size: 0.95rem;
+  font-weight: 600;           /* 500 → 600 */
+  border-left: 6px solid #922b21; /* 深紅左邊框，增加層次感 */
+  letter-spacing: 0.01em;
+}
+
+/* 隱藏狀態：由 JS 移除此 class 來顯示橫幅 */
+.alert-banner.hidden {
+  display: none;
+}
+
+.alert-close {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: #fff;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  transition: background-color 0.15s;
+}
+
+.alert-close:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ==============================================
+   頁首
+   ============================================== */
+.site-header {
+  background-color: #1a2b4a;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.site-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.site-subtitle {
+  margin-top: 4px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* ==============================================
+   主要內容區
+   ============================================== */
+.main-content {
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* 區塊標題 */
+.section-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #1a2b4a;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e0e6ef;
+}
+
+/* ==============================================
+   摘要卡片
+   ============================================== */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px; /* 16px → 24px，卡片間距加大 */
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 28px 28px 24px; /* 上下略調，左右從 24px 加至 28px */
+  border-left: 4px solid #2980b9;
+  transition: box-shadow 0.15s;
+  overflow: hidden; /* 讓 ::before 色條被圓角正確裁切 */
+}
+
+.card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.card-title {
+  font-size: 0.9rem;      /* 0.85rem → 0.9rem */
+  font-weight: 700;       /* 600 → 700，加粗讓標題更清楚 */
+  color: #4a5568;         /* #7f8c8d → #4a5568，明顯加深 */
+  text-transform: uppercase;
+  letter-spacing: 0.05em; /* 0.04em → 0.05em，間距稍開 */
+  margin-bottom: 12px;    /* 10px → 12px */
+}
+
+.card-value {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #1a2b4a;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.card-unit {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #7f8c8d;
+}
+
+.card-note {
+  font-size: 0.78rem;
+  color: #95a5a6;
+  margin-top: 8px; /* 6px → 8px */
+}
+
+/* 警示狀態：今日用電量超標時套用 */
+.card--alert {
+  border-left: 6px solid #e67e22; /* 加粗至 6px */
+  background-color: #fff8f0;
+  box-shadow: 0 2px 8px rgba(230, 126, 34, 0.15); /* 帶橘色陰影 */
+}
+
+/* 警示卡片頂部色條，加強視覺突出 */
+.card--alert::before {
+  content: '⚠ 超標警示';
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+  background-color: #e67e22;
+  margin: -28px -28px 16px -28px; /* 貼合卡片內距，撐至邊緣 */
+  padding: 5px 12px;
+  border-radius: 8px 8px 0 0;
+  letter-spacing: 0.04em;
+}
+
+.card--alert .card-value {
+  color: #c0392b;
+}
+
+.card--alert .card-title {
+  color: #c0392b; /* 橘色改紅色，與數值色一致 */
+}
+
+/* ==============================================
+   趨勢圖
+   ============================================== */
+.chart-section {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+}
+
+.chart-wrapper {
+  /* 讓 SVG 填滿容器寬度並維持 viewBox 的 700:240 比例 */
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* SVG 本身：寬度填滿、高度由 viewBox 比例自動決定 */
+#trend-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 160px; /* 防止過窄時圖表太矮 */
+}
+
+/* SVG 折線圖的文字與線條基礎樣式 */
+#trend-chart text {
+  font-family: inherit;
+  font-size: 11px;
+  fill: #7f8c8d;
+}
+
+#trend-chart .axis-line {
+  stroke: #dce3ed;
+  stroke-width: 1;
+}
+
+#trend-chart .chart-line {
+  fill: none;
+  stroke: #2980b9;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+#trend-chart .chart-area {
+  fill: rgba(41, 128, 185, 0.1);
+}
+
+#trend-chart .data-point {
+  fill: #2980b9;
+  stroke: #fff;
+  stroke-width: 2;
+  cursor: pointer;
+}
+
+#trend-chart .data-point:hover {
+  fill: #1a5c8a;
+  r: 6;
+}
+
+/* ==============================================
+   設備狀態列表
+   ============================================== */
+.device-section {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+}
+
+/* 水平捲動容器（窄螢幕適用） */
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.device-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.device-table th {
+  text-align: left;
+  padding: 10px 16px;
+  background-color: #f0f4f8;
+  color: #5a6a7a;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 2px solid #dce3ed;
+}
+
+.device-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #eef1f5;
+  color: #2c3e50;
+}
+
+/* 奇偶列交替背景 */
+.device-table tbody tr:nth-child(even) td {
+  background-color: #fafbfc;
+}
+
+.device-table tbody tr:hover td {
+  background-color: #eef6fd;
+}
+
+/* 狀態標籤 */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.badge--normal {
+  background-color: #eafaf1;
+  color: #1e8449;
+  border: 1px solid #a9dfbf;
+}
+
+.badge--warning {
+  background-color: #fef9e7;
+  color: #b7770d;
+  border: 1px solid #f9e79f;
+}
+
+.badge--error {
+  background-color: #fdedec;
+  color: #c0392b;
+  border: 1px solid #f5b7b1;
+}
+
+/* ==============================================
+   頁尾
+   ============================================== */
+.site-footer {
+  background-color: #1a2b4a;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  padding: 16px 20px;
+  font-size: 0.8rem;
+}
+
+/* ==============================================
+   響應式設計
+   ============================================== */
+
+/* 平板（≤ 768px）：卡片數值縮小，間距收緊 */
+@media (max-width: 768px) {
+  .site-title {
+    font-size: 1.3rem;
+  }
+
+  .main-content {
+    padding: 20px 16px;
+    gap: 16px;
+  }
+
+  .cards-container {
+    gap: 16px; /* 桌機 24px，平板收回 16px */
+  }
+
+  .card-value {
+    font-size: 2rem;
+  }
+
+  .card {
+    padding: 24px 24px 20px; /* 對應基礎值調整 */
+  }
+
+  /* 警示色條對應新的 padding */
+  .card--alert::before {
+    margin: -24px -24px 14px -24px;
+  }
+}
+
+/* 手機（≤ 480px）：卡片單欄、圖表允許捲動 */
+@media (max-width: 480px) {
+  .cards-container {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .site-title {
+    font-size: 1.15rem;
+  }
+
+  .card-value {
+    font-size: 1.8rem;
+  }
+
+  .card {
+    padding: 20px 20px 16px;
+  }
+
+  /* 警示色條對應手機 padding */
+  .card--alert::before {
+    margin: -20px -20px 14px -20px;
+  }
+
+  .chart-section,
+  .device-section {
+    padding: 16px;
+  }
+
+  .alert-banner {
+    padding: 10px 16px;
+    font-size: 0.88rem;
+  }
+}
